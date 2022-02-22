@@ -2,7 +2,7 @@ package models.ships;
 
 public class PartShip {
     private int x, y;
-    private StatePart statePart = StatePart.OK;
+    private PartState partState = PartState.OK;
 
     PartShip(int x, int y) {
         setX(x);
@@ -25,12 +25,12 @@ public class PartShip {
         return y;
     }
 
-    public void setStatePart(StatePart statePart) {
-        this.statePart = statePart;
+    public void setStatePart(PartState partState) {
+        this.partState = partState;
     }
 
-    public StatePart getStatePart() {
-        return statePart;
+    public PartState getStatePart() {
+        return partState;
     }
 
 }

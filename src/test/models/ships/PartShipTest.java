@@ -1,11 +1,8 @@
 package models.ships;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class PartShipTest {
     private PartShip partShip;
@@ -41,7 +38,7 @@ class PartShipTest {
     @Test
     void createPart_StateOk () {
         System.out.println("Testing class PartShip: createPart_Ok");
-        Assertions.assertEquals(partShip.getStatePart(), StatePart.OK);
+        Assertions.assertEquals(partShip.getStatePart(), PartState.OK);
     }
 
 }

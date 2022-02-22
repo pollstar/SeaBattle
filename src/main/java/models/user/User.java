@@ -1,9 +1,9 @@
 package models.user;
 
-import models.battleground.BattleGround;
+import models.battledesk.Desk;
 
 public abstract class User {
-    private BattleGround battleGround;
+    private Desk desk;
 
     protected void createBattleGround()
     {

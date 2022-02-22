@@ -1,6 +1,6 @@
 package models.ships;
 
-public enum StatePart {
+public enum PartState {
     OK,
     BROKE
 }

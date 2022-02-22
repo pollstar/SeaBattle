@@ -1,6 +1,6 @@
 package models.ships;
 
-public enum TypeShip {
+public enum ShipType {
     ONE(1),
     TWO(2),
     THREE(3),
@@ -8,7 +8,7 @@ public enum TypeShip {
     BOMB(1);
 
     private int type;
-    TypeShip(int i) {
+    ShipType(int i) {
         this.type = i;
     }
 
