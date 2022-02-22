@@ -8,6 +8,8 @@ import models.ships.ShipType;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static models.ships.ShipOrientation.*;
+
 public class Desk {
     private final Cell[][] cells = new Cell[10][10];
 
@@ -20,19 +22,25 @@ public class Desk {
     }
 
     public boolean placeShip(int x, int y, ShipType type, ShipOrientation orientation) {
-        if (x < 0 || x > 9 || y < 0 || y > 9) {
-            return false;
-        }
-
-        var tempX = x;
-        var tempY = y;
-        ArrayList<Cell> cellTesting = new ArrayList<>();
+        ArrayList<Cell> cellTesting = new ArrayList<Cell>();
 
         for (int i = 0; i < type.getType(); i++) {
-            if (cells[y][x].getCellStatus() != CellStatus.EMPTY) {
+            if (cells[y][x].getCellStatus() != CellStatus.EMPTY ||
+                    x < 0 || x > 9 || y < 0 || y > 9) {
                 return false;
             }
             cellTesting.add(cells[y][x]);
+
+            switch (orientation) {
+                case NORTH : y++; break;
+                case SOUTH : y--; break;
+                case WEST : x++;break;
+                case EAST : x--;break;
+            }
+        }
+
+        for (int i = 0; i < cellTesting.size(); i++) {
+            cellTesting.get(i).setCellStatus(CellStatus.SHIP_PART_OK);
         }
         return true;
     }
