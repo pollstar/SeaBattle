@@ -6,9 +6,6 @@ import models.ships.ShipOrientation;
 import models.ships.ShipType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import static models.ships.ShipOrientation.*;
 
 public class Desk {
     private final Cell[][] cells = new Cell[10][10];
@@ -24,23 +21,11 @@ public class Desk {
     public boolean placeShip(int x, int y, ShipType type, ShipOrientation orientation) {
         ArrayList<Cell> cellTesting = new ArrayList<Cell>();
 
-        if (x<0 || x >9 || y<0 || y>9) {
-            return false;
-        }
-
         for (int i = 0; i < type.getType(); i++) {
-            for (int j = y - 1; j < y+1; j++) {
-                if (j<0 || j>9) {
-                    continue;
-                }
-                for (int k = x-1; k < x+1; k++) {
-                    if (k<0 || k >9) {
-                        continue;
-                    }
-                    if (cells[j][k].getCellStatus() != CellStatus.EMPTY)
-                        return false;
-                }
+            if (x < 0 || x > 9 || y < 0 || y > 9) {
+                return false;
             }
+            if (!isCellsOverEmpty(x, y)) return false;
             cellTesting.add(cells[y][x]);
 
             switch (orientation) {
@@ -61,6 +46,22 @@ public class Desk {
 
         for (Cell cell : cellTesting) {
             cell.setCellStatus(CellStatus.SHIP_PART_OK);
+        }
+        return true;
+    }
+
+    private boolean isCellsOverEmpty(int x, int y) {
+        for (int j = y - 1; j <= y + 1; j++) {
+            if (j < 0 || j > 9) {
+                continue;
+            }
+            for (int k = x - 1; k <= x + 1; k++) {
+                if (k < 0 || k > 9) {
+                    continue;
+                }
+                if (cells[j][k].getCellStatus() != CellStatus.EMPTY)
+                    return false;
+            }
         }
         return true;
     }
