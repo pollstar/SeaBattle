@@ -15,7 +15,7 @@ public class Desk {
 
     public Desk() {
         for (var y = 0; y < cells.length; y++) {
-            for (var x=0; x<cells[y].length; x++) {
+            for (var x = 0; x < cells[y].length; x++) {
                 cells[y][x] = new Cell();
             }
         }
@@ -24,23 +24,43 @@ public class Desk {
     public boolean placeShip(int x, int y, ShipType type, ShipOrientation orientation) {
         ArrayList<Cell> cellTesting = new ArrayList<Cell>();
 
+        if (x<0 || x >9 || y<0 || y>9) {
+            return false;
+        }
+
         for (int i = 0; i < type.getType(); i++) {
-            if (cells[y][x].getCellStatus() != CellStatus.EMPTY ||
-                    x < 0 || x > 9 || y < 0 || y > 9) {
-                return false;
+            for (int j = y - 1; j < y+1; j++) {
+                if (j<0 || j>9) {
+                    continue;
+                }
+                for (int k = x-1; k < x+1; k++) {
+                    if (k<0 || k >9) {
+                        continue;
+                    }
+                    if (cells[j][k].getCellStatus() != CellStatus.EMPTY)
+                        return false;
+                }
             }
             cellTesting.add(cells[y][x]);
 
             switch (orientation) {
-                case NORTH : y++; break;
-                case SOUTH : y--; break;
-                case WEST : x++;break;
-                case EAST : x--;break;
+                case NORTH:
+                    y++;
+                    break;
+                case SOUTH:
+                    y--;
+                    break;
+                case WEST:
+                    x++;
+                    break;
+                case EAST:
+                    x--;
+                    break;
             }
         }
 
-        for (int i = 0; i < cellTesting.size(); i++) {
-            cellTesting.get(i).setCellStatus(CellStatus.SHIP_PART_OK);
+        for (Cell cell : cellTesting) {
+            cell.setCellStatus(CellStatus.SHIP_PART_OK);
         }
         return true;
     }
