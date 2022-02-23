@@ -1,5 +1,7 @@
 package models.ships;
 
+import models.Point;
+
 public class PartShip {
     private int x, y;
     private PartState partState = PartState.OK;
@@ -7,6 +9,11 @@ public class PartShip {
     PartShip(int x, int y) {
         setX(x);
         setY(y);
+    }
+
+    PartShip(Point point) {
+        setX(point.getX());
+        setY(point.getY());
     }
 
     public void setX ( int x){

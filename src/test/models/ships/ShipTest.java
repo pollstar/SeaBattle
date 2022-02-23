@@ -5,38 +5,26 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ShipTest {
-    Ship ship = new Ship(ShipType.FOUR) {
-        @Override
-        protected boolean placeShip(int x, int y, ShipOrientation shipOrientation) {
-            this.partsShip[0] = new PartShip(1,2);
-            this.partsShip[1] = new PartShip(1,3);
-            this.partsShip[2] = new PartShip(1,4);
-            this.partsShip[3] = new PartShip(1,5);
-            return true;
-        }
-    };
+    Ship ship = new Ship();
 
     @BeforeEach
     void setUp () {
-        ship.placeShip(1,1, ShipOrientation.NORTH);
+        ship.addPart(1, 2);
+        ship.addPart(1, 3);
+        ship.addPart(1, 4);
+        ship.addPart(1, 5);
     }
 
     @Test
-    void testAndSetHit_True() {
+    void testAndSetHit() {
         System.out.println("Testing class Ship: testAndSetHit_True");
-        Assertions.assertTrue(ship.testAndSetHit(1,2));
-        Assertions.assertTrue(ship.testAndSetHit(1,3));
-        Assertions.assertTrue(ship.testAndSetHit(1,4));
-        Assertions.assertTrue(ship.testAndSetHit(1,5));
-    }
-
-    @Test
-    void testAndSetHit_False() {
-        System.out.println("Testing class Ship: testAndSetHit_False");
-        Assertions.assertFalse(ship.testAndSetHit(3,2));
-        Assertions.assertFalse(ship.testAndSetHit(5,3));
-        Assertions.assertFalse(ship.testAndSetHit(7,4));
-        Assertions.assertFalse(ship.testAndSetHit(8,5));
+        Assertions.assertEquals(ship.shipStatus, ShipStatus.OK);
+        ship.testAndSetHit(1,2);
+        ship.testAndSetHit(1,3);
+        Assertions.assertEquals(ship.shipStatus, ShipStatus.INJURED);
+        ship.testAndSetHit(1,4);
+        ship.testAndSetHit(1,5);
+        Assertions.assertEquals(ship.shipStatus, ShipStatus.KILLED);
     }
 
     @Test
@@ -70,4 +58,13 @@ class ShipTest {
         ship.testAndSetHit(19,-3);
         Assertions.assertEquals(ship.getShipStatus(), ShipStatus.OK);
     }
+
+    @Test
+    void addPart_Ok () {
+        System.out.println("Testing class Ship: addPart_Ok");
+        int i = ship.partsShip.size();
+        ship.addPart(1,1);
+        Assertions.assertEquals(i+1, ship.partsShip.size());
+    }
+
 }

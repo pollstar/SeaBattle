@@ -1,17 +1,20 @@
 package models.ships;
 
-public abstract class Ship {
-    protected PartShip[] partsShip;
-    protected ShipStatus shipStatus = ShipStatus.OK;
+import models.Point;
 
-    public Ship(ShipType shipType) {
-        partsShip = new PartShip[shipType.getType()];
+import java.util.ArrayList;
+
+public class Ship {
+    protected ArrayList<PartShip> partsShip;
+    protected ShipStatus shipStatus;
+
+    public Ship() {
+        partsShip = new ArrayList<PartShip>();
+        shipStatus = ShipStatus.OK;
     }
 
-    protected abstract boolean placeShip(int x, int y, ShipOrientation shipOrientation) ;
-
     public boolean testAndSetHit(int x, int y) {
-        for (PartShip part: partsShip) {
+        for (PartShip part : partsShip) {
             if (part.getX() == x && part.getY() == y) {
                 part.setStatePart(PartState.BROKE);
                 shipStatus = ShipStatus.INJURED;
@@ -22,11 +25,11 @@ public abstract class Ship {
         return false;
     }
 
-    private void testAndSetKill () {
+    private void testAndSetKill() {
         if (shipStatus == ShipStatus.KILLED) {
             return;
         }
-        for (PartShip part: partsShip) {
+        for (PartShip part : partsShip) {
             if (part.getStatePart() == PartState.OK) {
                 return;
             }
@@ -36,5 +39,13 @@ public abstract class Ship {
 
     public ShipStatus getShipStatus() {
         return shipStatus;
+    }
+
+    public void addPart(int x, int y) {
+        partsShip.add(new PartShip(x, y));
+    }
+
+    public void addPart(Point point) {
+        partsShip.add(new PartShip(point.getX(), point.getY()));
     }
 }

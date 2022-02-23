@@ -1,7 +1,9 @@
 package models.battledesk;
 
+import actions.BattleDesk.PlacerShip;
 import models.cells.Cell;
 import models.cells.CellStatus;
+import models.ships.Ship;
 import models.ships.ShipOrientation;
 import models.ships.ShipType;
 
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 
 public class Desk {
     private final Cell[][] cells = new Cell[10][10];
+    private final ArrayList<Ship> ships = new ArrayList<Ship>();
 
     public Desk() {
         for (var y = 0; y < cells.length; y++) {
@@ -19,35 +22,7 @@ public class Desk {
     }
 
     public boolean placeShip(int x, int y, ShipType type, ShipOrientation orientation) {
-        ArrayList<Cell> cellTesting = new ArrayList<Cell>();
-
-        for (int i = 0; i < type.getType(); i++) {
-            if (x < 0 || x > 9 || y < 0 || y > 9) {
-                return false;
-            }
-            if (!isCellsOverEmpty(x, y)) return false;
-            cellTesting.add(cells[y][x]);
-
-            switch (orientation) {
-                case NORTH:
-                    y++;
-                    break;
-                case SOUTH:
-                    y--;
-                    break;
-                case WEST:
-                    x++;
-                    break;
-                case EAST:
-                    x--;
-                    break;
-            }
-        }
-
-        for (Cell cell : cellTesting) {
-            cell.setCellStatus(CellStatus.SHIP_PART_OK);
-        }
-        return true;
+        return PlacerShip.place(this, x, y ,type, orientation);
     }
 
     private boolean isCellsOverEmpty(int x, int y) {
@@ -81,5 +56,13 @@ public class Desk {
         }
 
         return desk;
+    }
+
+    public Cell[][] getCells() {
+        return cells;
+    }
+
+    public ArrayList<Ship> getShips() {
+        return ships;
     }
 }

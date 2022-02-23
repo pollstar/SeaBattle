@@ -1,13 +1,12 @@
 package actions.BattleDesk;
 
 import models.battledesk.Desk;
-import models.ships.ShipOrientation;
-import models.ships.ShipType;
+import models.ships.*;
 
 import java.util.Random;
 
-public class PlacerShipsRandom {
-    public PlacerShipsRandom(Desk desk) {
+public class SetShipsRandom {
+    public SetShipsRandom(Desk desk) {
         ShipsArray shipsTypeArray = new ShipsArray();
         Random rnd = new Random();
         for (ShipType shipType: shipsTypeArray.ships) {
