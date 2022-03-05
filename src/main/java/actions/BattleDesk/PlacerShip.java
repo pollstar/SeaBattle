@@ -45,7 +45,7 @@ public final class PlacerShip {
                 if (k < 0 || k > 9) {
                     continue;
                 }
-                if (desk.getCells()[j][k].getCellStatus() != CellStatus.EMPTY)
+                if (desk.getCells()[k][j].getCellStatus() != CellStatus.EMPTY)
                     return false;
             }
         }
