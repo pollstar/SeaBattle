@@ -29,9 +29,10 @@ public final class PlacerShip {
         Ship newShip = new Ship();
         desk.getShips().add(newShip);
 
-        for (Map.Entry<Point, Cell> entry : cellTesting.entrySet()) {
-            newShip.addPart(entry.getKey());
-            entry.getValue().setCellStatus(shipType == ShipType.BOMB ? CellStatus.BOMB_OK : CellStatus.SHIP_PART_OK);
+        for (Map.Entry<Point, Cell> point : cellTesting.entrySet()) {
+            newShip.addPart(point.getKey());
+            point.getValue().setCellStatus(shipType == ShipType.BOMB ? CellStatus.BOMB_OK : CellStatus.SHIP_PART_OK);
+            point.getValue().setShip(newShip);
         }
         return true;
     }
